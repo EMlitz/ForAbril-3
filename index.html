@@ -1,0 +1,984 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Abril Priscila 🌷</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            overflow-x: hidden;
+            background: #160b18;
+            color: #fff;
+        }
+
+        /* =========================
+           FONDO
+        ========================== */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            background:
+                radial-gradient(circle at 50% 20%, rgba(255, 157, 190, 0.25), transparent 35%),
+                linear-gradient(to bottom, #160b18 0%, #35142b 45%, #160b18 100%);
+        }
+
+        .moon {
+            position: fixed;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: rgba(255, 239, 244, 0.9);
+            box-shadow:
+                0 0 30px rgba(255, 220, 235, 0.7),
+                0 0 90px rgba(255, 170, 200, 0.25);
+            top: 8%;
+            right: 10%;
+            z-index: -8;
+            opacity: 0.9;
+        }
+
+        /* =========================
+           ESTRELLAS
+        ========================== */
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -5;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #fff;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.25;
+                transform: scale(0.7);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* =========================
+           PANTALLA INICIAL
+        ========================== */
+
+        #inicio {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .envelope-container {
+            text-align: center;
+            perspective: 1000px;
+        }
+
+        .envelope {
+            width: 330px;
+            max-width: 90vw;
+            min-height: 230px;
+            position: relative;
+            padding: 55px 25px 35px;
+            background: linear-gradient(145deg, #fff7fa, #f5dce6);
+            border-radius: 8px;
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(255, 160, 190, 0.15);
+            color: #5c233c;
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 165px solid transparent;
+            border-right: 165px solid transparent;
+            border-top: 95px solid #e8afc1;
+        }
+
+        .envelope h1 {
+            position: relative;
+            z-index: 2;
+            font-size: 26px;
+            margin-bottom: 18px;
+            color: #7c294e;
+        }
+
+        .envelope p {
+            position: relative;
+            z-index: 2;
+            font-size: 17px;
+            font-style: italic;
+            color: #8b4864;
+        }
+
+        .heart-seal {
+            position: absolute;
+            z-index: 5;
+            left: 50%;
+            top: 72px;
+            transform: translateX(-50%);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #c94b78;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(130, 35, 70, 0.35);
+        }
+
+        .open-button {
+            margin-top: 30px;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #e98baa, #c94b78);
+            color: white;
+            font-size: 16px;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(201, 75, 120, 0.35);
+            transition: 0.3s ease;
+        }
+
+        .open-button:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 15px 35px rgba(201, 75, 120, 0.5);
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(1deg);
+            }
+        }
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+        ========================== */
+
+        #contenido {
+            display: none;
+            min-height: 100vh;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section {
+            max-width: 900px;
+            margin: 0 auto 150px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .subtitle {
+            color: #f4b3c8;
+            font-size: 15px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 6vw, 52px);
+            color: #fff1f6;
+            margin-bottom: 35px;
+            text-shadow: 0 0 20px rgba(255, 170, 200, 0.25);
+        }
+
+        /* =========================
+           CARTA
+        ========================== */
+
+        .letter {
+            max-width: 760px;
+            margin: auto;
+            padding: 50px;
+            border-radius: 18px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 245, 248, 0.97),
+                    rgba(250, 220, 232, 0.94)
+                );
+            color: #512239;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.4),
+                0 0 50px rgba(255, 170, 200, 0.12);
+            position: relative;
+            text-align: left;
+        }
+
+        .letter::before {
+            content: "🌷";
+            position: absolute;
+            top: -25px;
+            left: 35px;
+            font-size: 45px;
+        }
+
+        .letter::after {
+            content: "🌷";
+            position: absolute;
+            bottom: -20px;
+            right: 35px;
+            font-size: 42px;
+        }
+
+        .letter p {
+            font-size: 19px;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 35px;
+            font-size: 20px;
+            color: #9b3f63;
+            font-style: italic;
+        }
+
+        /* =========================
+           TARJETAS
+        ========================== */
+
+        .cards {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .card {
+            padding: 25px 30px;
+            border-radius: 18px;
+            background: rgba(255, 226, 237, 0.09);
+            border: 1px solid rgba(255, 180, 205, 0.22);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease,
+                background 0.3s ease;
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 180, 205, 0.15);
+        }
+
+        .card p {
+            font-size: 21px;
+            color: #ffe8f0;
+        }
+
+        /* =========================
+           TULIPANES
+        ========================== */
+
+        .tulip-garden {
+            position: fixed;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 220px;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .tulip {
+            position: absolute;
+            bottom: 0;
+            width: 80px;
+            height: 180px;
+            pointer-events: auto;
+            cursor: pointer;
+            transform-origin: bottom center;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .stem {
+            position: absolute;
+            width: 6px;
+            height: 130px;
+            background: linear-gradient(to right, #356b43, #5f9b62);
+            left: 37px;
+            bottom: 0;
+            border-radius: 10px;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 55px;
+            height: 25px;
+            background: #4c8954;
+            border-radius: 100% 0 100% 0;
+            transform: rotate(-25deg);
+            left: 5px;
+            bottom: 45px;
+        }
+
+        .leaf.right {
+            transform: rotate(25deg) scaleX(-1);
+            left: 28px;
+            bottom: 70px;
+        }
+
+        .flower {
+            position: absolute;
+            width: 60px;
+            height: 58px;
+            left: 10px;
+            bottom: 115px;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(145deg, #ffb6d0, #dc5f8d);
+            width: 35px;
+            height: 55px;
+            border-radius: 60% 60% 45% 45%;
+            box-shadow: inset -5px -8px 12px rgba(130, 30, 70, 0.12);
+        }
+
+        .petal.one {
+            left: 0;
+            top: 5px;
+            transform: rotate(-20deg);
+        }
+
+        .petal.two {
+            left: 13px;
+            top: 0;
+            z-index: 2;
+        }
+
+        .petal.three {
+            left: 27px;
+            top: 5px;
+            transform: rotate(20deg);
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: rotate(-2deg);
+            }
+
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+
+        .tulip:hover {
+            animation: tulipBounce 0.7s ease;
+        }
+
+        @keyframes tulipBounce {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            40% {
+                transform: rotate(-8deg) scale(1.12);
+            }
+
+            70% {
+                transform: rotate(7deg) scale(1.08);
+            }
+
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+        }
+
+        /* =========================
+           MENSAJE AL HACER CLIC
+        ========================== */
+
+        .flower-message {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background: rgba(75, 23, 47, 0.95);
+            border: 1px solid rgba(255, 190, 215, 0.3);
+            padding: 25px 35px;
+            border-radius: 20px;
+            color: #ffe9f1;
+            font-size: 20px;
+            text-align: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .flower-message.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* =========================
+           FINAL
+        ========================== */
+
+        .final-message {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #ffdce8;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .final-heart {
+            font-size: 55px;
+            margin-top: 30px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 600px) {
+            .moon {
+                width: 100px;
+                height: 100px;
+                right: 5%;
+            }
+
+            .envelope {
+                min-height: 220px;
+                padding-top: 50px;
+            }
+
+            .envelope::before {
+                border-left-width: 45vw;
+                border-right-width: 45vw;
+            }
+
+            .letter {
+                padding: 32px 25px;
+            }
+
+            .letter p {
+                font-size: 17px;
+                line-height: 1.8;
+            }
+
+            .card p {
+                font-size: 18px;
+            }
+
+            .tulip-garden {
+                height: 150px;
+            }
+
+            .tulip {
+                transform: scale(0.7);
+                transform-origin: bottom center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background"></div>
+    <div class="moon"></div>
+    <div class="stars" id="stars"></div>
+
+    <!-- =========================
+         CARTA INICIAL
+    ========================== -->
+
+    <section id="inicio">
+
+        <div class="envelope-container">
+
+            <div class="envelope">
+
+                <div class="heart-seal">♥</div>
+
+                <h1>Para mi Abril Priscila</h1>
+
+                <p>De: EMlitz</p>
+
+            </div>
+
+            <button class="open-button" onclick="abrirCarta()">
+                Abrir carta 💌
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTENIDO
+    ========================== -->
+
+    <main id="contenido">
+
+        <!-- CARTA -->
+
+        <section class="section" id="carta">
+
+            <div class="subtitle">🌙 Para ti</div>
+
+            <h2 class="section-title">
+                Una pequeña carta
+            </h2>
+
+            <div class="letter">
+
+                <p>
+                    Quizás nunca encuentre las palabras perfectas para
+                    describir todo lo que siento por ti, porque hay
+                    sentimientos que simplemente no caben en una frase.
+                </p>
+
+                <p>
+                    Solo quiero que sepas que cada día agradezco haberte
+                    conocido y que mi mayor deseo es seguir construyendo
+                    recuerdos a tu lado.
+                </p>
+
+                <p>
+                    No importa lo que pase o lo difícil que sea el camino,
+                    mientras caminemos juntos siempre habrá una razón para
+                    sonreír y seguir adelante.
+                </p>
+
+                <div class="signature">
+                    Con mucho cariño,<br>
+                    EMlitz ❤️
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MENSAJES -->
+
+        <section class="section" id="mensajes">
+
+            <div class="subtitle">💕 Unas pequeñas palabras</div>
+
+            <h2 class="section-title">
+                Lo que quiero que recuerdes
+            </h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <p>💗 Te quiero muchísimo.</p>
+                </div>
+
+                <div class="card">
+                    <p>🌷 Te adoro.</p>
+                </div>
+
+                <div class="card">
+                    <p>✨ Eres muy importante para mí.</p>
+                </div>
+
+                <div class="card">
+                    <p>🫶 Me haces muy feliz.</p>
+                </div>
+
+                <div class="card">
+                    <p>🌙 Me encanta tenerte en mi vida.</p>
+                </div>
+
+                <div class="card">
+                    <p>💕 Eres alguien muy especial para mí.</p>
+                </div>
+
+                <div class="card">
+                    <p>🥹 Me encanta cada momento contigo.</p>
+                </div>
+
+                <div class="card">
+                    <p>🌸 Quiero seguir creando recuerdos a tu lado.</p>
+                </div>
+
+                <div class="card">
+                    <p>❤️ Gracias por existir y llegar a mi vida.</p>
+                </div>
+
+                <div class="card">
+                    <p>🌷 Te quiero más de lo que muchas veces puedo explicar.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINAL -->
+
+        <section class="section">
+
+            <div class="subtitle">🌷 Y por último...</div>
+
+            <h2 class="section-title">
+                Para ti, Abril
+            </h2>
+
+            <p class="final-message">
+                Espero que cada vez que veas un tulipán rosado recuerdes
+                que existe alguien que te quiere muchísimo y que está
+                feliz de haberte conocido.
+                <br><br>
+                Gracias por ser tú. ❤️
+            </p>
+
+            <div class="final-heart">
+                🌷 ❤️ 🌷
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         TULIPANES
+    ========================== -->
+
+    <div class="tulip-garden" id="garden"></div>
+
+
+    <!-- MENSAJE DE TULIPÁN -->
+
+    <div class="flower-message" id="flowerMessage">
+        🌷 Este tulipán es para ti ❤️
+    </div>
+
+
+    <script>
+
+        /* =========================
+           ESTRELLAS
+        ========================== */
+
+        const starsContainer = document.getElementById("stars");
+
+        for (let i = 0; i < 80; i++) {
+
+            const star = document.createElement("div");
+
+            star.classList.add("star");
+
+            star.style.left = Math.random() * 100 + "%";
+            star.style.top = Math.random() * 75 + "%";
+
+            star.style.animationDelay =
+                Math.random() * 3 + "s";
+
+            star.style.opacity =
+                Math.random();
+
+            starsContainer.appendChild(star);
+        }
+
+
+        /* =========================
+           CREAR TULIPANES
+        ========================== */
+
+        const garden = document.getElementById("garden");
+
+        const flowerMessages = [
+            "🌷 Un tulipán para la niña que me hace sonreír.",
+            "💕 Porque sé que te gustan los tulipanes.",
+            "🌸 Eres tan especial como esta flor.",
+            "❤️ Este pequeño detalle es para ti.",
+            "🌷 Ojalá pudiera regalarte un campo entero de tulipanes.",
+            "✨ Siempre habrá una flor que me haga pensar en ti."
+        ];
+
+        for (let i = 0; i < 14; i++) {
+
+            const tulip = document.createElement("div");
+
+            tulip.className = "tulip";
+
+            const left = Math.random() * 100;
+
+            const scale = 0.65 + Math.random() * 0.55;
+
+            const delay = Math.random() * 4;
+
+            tulip.style.left = left + "%";
+            tulip.style.transform = `scale(${scale})`;
+            tulip.style.animationDelay = delay + "s";
+
+            tulip.innerHTML = `
+                <div class="flower">
+                    <div class="petal one"></div>
+                    <div class="petal two"></div>
+                    <div class="petal three"></div>
+                </div>
+
+                <div class="stem"></div>
+
+                <div class="leaf"></div>
+                <div class="leaf right"></div>
+            `;
+
+            tulip.addEventListener("click", () => {
+
+                const message =
+                    flowerMessages[
+                        Math.floor(
+                            Math.random() *
+                            flowerMessages.length
+                        )
+                    ];
+
+                mostrarMensaje(message);
+            });
+
+            garden.appendChild(tulip);
+        }
+
+
+        /* =========================
+           ABRIR CARTA
+        ========================== */
+
+        function abrirCarta() {
+
+            const inicio =
+                document.getElementById("inicio");
+
+            const contenido =
+                document.getElementById("contenido");
+
+            inicio.style.opacity = "0";
+            inicio.style.transform = "scale(1.05)";
+
+            setTimeout(() => {
+
+                inicio.style.display = "none";
+
+                contenido.style.display = "block";
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "instant"
+                });
+
+                setTimeout(() => {
+
+                    document
+                        .getElementById("carta")
+                        .classList.add("visible");
+
+                }, 100);
+
+            }, 1000);
+
+        }
+
+
+        /* =========================
+           TARJETAS UNA POR UNA
+        ========================== */
+
+        const cards =
+            document.querySelectorAll(".card");
+
+        const observer =
+            new IntersectionObserver(
+                (entries) => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            const visibleCards =
+                                entry.target.querySelectorAll(".card");
+
+                            if (visibleCards.length > 0) {
+
+                                visibleCards.forEach(
+                                    (card, index) => {
+
+                                        setTimeout(() => {
+                                            card.classList.add("show");
+                                        }, index * 350);
+
+                                    }
+                                );
+
+                            }
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.15
+                }
+            );
+
+
+        document
+            .querySelectorAll(".section")
+            .forEach(section => {
+
+                observer.observe(section);
+
+            });
+
+
+        /* =========================
+           MENSAJE DE TULIPÁN
+        ========================== */
+
+        function mostrarMensaje(texto) {
+
+            const box =
+                document.getElementById("flowerMessage");
+
+            box.textContent = texto;
+
+            box.classList.add("active");
+
+            setTimeout(() => {
+
+                box.classList.remove("active");
+
+            }, 2200);
+
+        }
+
+
+        /* =========================
+           CORAZONES AL HACER CLICK
+        ========================== */
+
+        document.addEventListener("click", function(e) {
+
+            if (
+                e.target.closest(".tulip") ||
+                e.target.closest(".open-button")
+            ) {
+                return;
+            }
+
+            const heart =
+                document.createElement("span");
+
+            heart.textContent = "♡";
+
+            heart.style.position = "fixed";
+            heart.style.left = e.clientX + "px";
+            heart.style.top = e.clientY + "px";
+            heart.style.color = "#ff9fbd";
+            heart.style.fontSize = "22px";
+            heart.style.pointerEvents = "none";
+            heart.style.zIndex = "100";
+            heart.style.transition =
+                "all 1s ease";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+
+                heart.style.transform =
+                    "translateY(-70px) scale(1.5)";
+
+                heart.style.opacity = "0";
+
+            }, 50);
+
+            setTimeout(() => {
+
+                heart.remove();
+
+            }, 1100);
+
+        });
+
+    </script>
+
+</body>
+</html>
+```
